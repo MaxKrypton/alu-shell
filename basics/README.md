@@ -1,2 +1,2 @@
 #!/bin/bash
-alu-shell/basics/README.md
+alu-shell/basics/
