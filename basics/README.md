@@ -1,2 +1,2 @@
 #!/bin/bash
-alu-shell/basics/
+/tmp/correction/3602537440503611137735096568595735473215_5/2019/6115/basics
