@@ -1,21 +1,16 @@
 #!/usr/bin/env bash
-# Set the input field separator (IFS) to ":"
-IFS=":"
+# Tell the story of passwd
 
-# Open the /etc/passwd file for reading
-exec 3< /etc/passwd
+file="/etc/passwd"
 
-# Read each line from the file
-while read -u 3 -r username _ uid gid _ home shell; do
-    # Extract user ID info from the username
-    uid_info=$(grep "^$username:" /etc/passwd | cut -d: -f5)
+while IFS= read -r line; do
+  user=$(echo "$line" | cut -d ':' -f1)
+  gid=$(echo "$line" | cut -d ':' -f4)
+  dir=$(echo "$line" | cut -d ':' -f6)
+  shell=$(echo "$line" | cut -d ':' -f7)
+  uid=$(echo "$line" | cut -d ':' -f3)
+  pass=$(echo "$line" | cut -d ':' -f2)
+  info=$(echo "$line" | cut -d ':' -f5)
 
-    # Extract the user's password (usually 'x')
-    password="x"
-
-    # Print formatted output
-    echo "The user $username is part of the $gid gang, lives in $home, and rides $shell. $uid's place is protected by the passcode $password, more info about the user here: $uid_info"
-done
-
-# Close the file descriptor
-exec 3<&-
+  echo "The user $user is part of the $gid gang, lives in $dir and rides $shell. $uid's place is protected by the passcode $pass, more info about the user here: $info"
+done < "$file"
