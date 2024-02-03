@@ -1,10 +1,4 @@
 #!/usr/bin/env bash
-# Check if apache-access.log file exists
-if [ ! -f "apache-access.log" ]; then
-    echo "Error: apache-access.log file not found in the current directory."
-    exit 1
-fi
+# Dig the data
 
-# Use awk to group, count, and format the data
-awk '{ip_count[$1" "$9]++} END {for (entry in ip_count) print ip_count[entry], entry}' apache-access.log | sort -nr
-
+awk '{print $1,$9}' apache-access.log | sort | uniq -c | sort -r
